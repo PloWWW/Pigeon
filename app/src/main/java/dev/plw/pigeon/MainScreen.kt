@@ -27,7 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.plw.pigeon.model.SharedFile
 import dev.plw.pigeon.network.NetworkController
 import dev.plw.pigeon.ui.components.Card
 import dev.plw.pigeon.ui.components.ChooseFileCard
@@ -37,7 +39,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    val nwc = remember { NetworkController() }
+
+    val context = LocalContext.current.applicationContext
+
+    val nwc = remember { NetworkController(context) }
     val scope = rememberCoroutineScope()
 
     var isServerRunning by remember { mutableStateOf(false) }
@@ -109,7 +114,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 )
             }
 
-            ChooseFileCard()
+            ChooseFileCard(onFilesUpdated = {
+                updatedList -> nwc.filesList = updatedList
+            })
 
             Spacer(modifier = Modifier.height(16.dp))
         }

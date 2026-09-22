@@ -24,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,10 +37,15 @@ import dev.plw.pigeon.model.SharedFile
 
 @Composable
 fun ChooseFileCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFilesUpdated: (List<SharedFile>) -> Unit
 ) {
     val context = LocalContext.current
     val files = remember { mutableStateListOf<SharedFile>() }
+
+    LaunchedEffect(files.size) {
+        onFilesUpdated(files.toList())
+    }
 
     val totalSizeMb = files.sumOf { it.sizeBytes } / (1024 * 1024)
 
