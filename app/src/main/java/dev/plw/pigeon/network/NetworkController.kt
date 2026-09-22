@@ -23,11 +23,6 @@ class NetworkController {
         }.start(wait = false)
     }
 
-    fun restartServer() {
-        stopServer()
-        startServer()
-    }
-
     fun stopServer() {
         server?.stop(gracePeriodMillis = 1000, timeoutMillis = 2000)
         server = null

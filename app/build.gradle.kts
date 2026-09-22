@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -44,6 +45,7 @@ val ktor_version = "3.1.1"
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
@@ -64,4 +66,8 @@ dependencies {
     implementation("io.ktor:ktor-server-cio")
 
     implementation("com.github.androidmads:QRGenerator:1.0.5")
+
+    implementation("androidx.compose.ui:ui-text-google-fonts")
+
+    implementation("androidx.compose.material:material-icons-extended")
 }
