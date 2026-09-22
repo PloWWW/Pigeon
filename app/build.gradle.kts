@@ -62,4 +62,6 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-cio")
+
+    implementation("com.github.androidmads:QRGenerator:1.0.5")
 }
