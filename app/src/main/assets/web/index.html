@@ -8,84 +8,157 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #121316;
-            color: #FFFFFF;
-            padding: 32px 16px;
+            background-color: #F4F5F7;
+            color: #16181D;
+            padding: 28px 16px;
             display: flex;
             justify-content: center;
         }
-        .container { width: 100%; max-width: 640px; }
-        .header {
+        .container { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
+        .section-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E5EA;
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
         }
-        .header-title h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-        .header-title span { font-size: 14px; color: #8F94A0; }
+        .section-title h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; color: #16181D; }
+        .section-title span { font-size: 13px; color: #717680; }
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             font-weight: 600;
-            border-radius: 10px;
-            transition: all 0.15s ease;
+            border-radius: 8px;
             cursor: pointer;
-            white-space: nowrap;
+            border: none;
+            font-family: inherit;
+            transition: all 0.15s ease;
         }
         .btn-primary {
             background-color: #2F80ED;
             color: #FFFFFF;
-            padding: 10px 18px;
-            font-size: 14px;
+            padding: 8px 16px;
+            font-size: 13px;
         }
         .btn-primary:hover { background-color: #1E6BD0; }
         .btn-secondary {
-            background-color: #282A2F;
-            color: #FFFFFF;
-            padding: 8px 14px;
+            background-color: #EDEFF2;
+            color: #16181D;
+            padding: 6px 12px;
             font-size: 13px;
-            border: 1px solid #363940;
+            border: 1px solid #E2E5EA;
         }
-        .btn-secondary:hover { background-color: #363940; border-color: #444852; }
-        .file-list { display: flex; flex-direction: column; gap: 10px; }
+        .btn-secondary:hover { background-color: #E2E5EA; }
+        .dropzone {
+            border: 2px dashed #E2E5EA;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            background-color: #F4F5F7;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .dropzone:hover, .dropzone.dragover { border-color: #2F80ED; background-color: #EDEFF2; }
+        .dropzone span { font-size: 14px; color: #717680; }
+        .file-list { display: flex; flex-direction: column; gap: 8px; }
         .file-card {
-            background-color: #1C1E22;
-            border: 1px solid #282A2F;
-            border-radius: 12px;
-            padding: 14px 18px;
+            background-color: #FFFFFF;
+            border: 1px solid #E2E5EA;
+            border-radius: 10px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 12px;
         }
         .file-info { display: flex; flex-direction: column; overflow: hidden; }
         .file-name {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
-            color: #EDEDED;
+            color: #16181D;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .file-size { font-size: 12px; color: #8F94A0; margin-top: 2px; }
+        .file-size { font-size: 12px; color: #717680; margin-top: 2px; }
+        .empty-placeholder {
+            text-align: center;
+            padding: 28px 16px;
+            color: #717680;
+            font-size: 14px;
+            border: 1px dashed #E2E5EA;
+            background-color: #F4F5F7;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="header-title">
-            <h1>Shared Files</h1>
-            <span>{{FILES_COUNT}} items &bull; ~{{TOTAL_SIZE}} MB</span>
+    <div class="section-card">
+        <div class="section-header">
+            <div class="section-title">
+                <h2>Server Files</h2>
+                <span>{{INFO}}</span>
+            </div>
+            <a href="/download-all" class="btn btn-primary" id="downloadAllBtn" style="{{DOWNLOAD_BTN_STYLE}}">Download All (.zip)</a>
         </div>
-        <a href="/download-all" class="btn btn-primary">Download All (.zip)</a>
-    </div>
-    <div class="file-list">
-        {{ITEMS}}
+
+        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+            <span id="dropText">Click or drag files here to upload to server</span>
+        </div>
+        <input type="file" id="fileInput" multiple style="display: none;">
+
+        <div class="file-list">
+            {{ITEMS}}
+        </div>
     </div>
 </div>
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const dropzone = document.getElementById('dropzone');
+    const dropText = document.getElementById('dropText');
+
+    function uploadFiles(files) {
+        if (!files.length) return;
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
+        dropText.textContent = 'Uploading to server...';
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        }).then(res => {
+            if (res.ok) {
+                window.location.reload();
+            } else {
+                dropText.textContent = 'Upload failed';
+            }
+        }).catch(() => {
+            dropText.textContent = 'Upload failed';
+        });
+    }
+
+    fileInput.addEventListener('change', () => uploadFiles(fileInput.files));
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        uploadFiles(e.dataTransfer.files);
+    });
+</script>
 </body>
 </html>

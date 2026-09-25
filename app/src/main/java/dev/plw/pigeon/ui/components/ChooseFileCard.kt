@@ -68,7 +68,7 @@ fun ChooseFileCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Files",
+                text = "Your Server Files",
                 style = MaterialTheme.typography.titleLarge
             )
             Text(

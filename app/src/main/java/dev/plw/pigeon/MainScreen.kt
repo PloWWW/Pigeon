@@ -32,6 +32,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,9 +50,12 @@ import androidx.compose.ui.unit.dp
 import dev.plw.pigeon.network.NetworkController
 import dev.plw.pigeon.ui.components.Card
 import dev.plw.pigeon.ui.components.ChooseFileCard
+import dev.plw.pigeon.ui.components.SaveFileCard
 import dev.plw.pigeon.ui.components.ServerStatusCard
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
@@ -64,6 +68,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
     var activePort by remember { mutableStateOf(8080) }
     var isServerRunning by remember { mutableStateOf(false) }
 
+    val receivedFiles = remember { mutableStateListOf<File>() }
     val localIp = remember { nwc.getLocalIpAddress() } ?: "127.0.0.1"
 
     fun restartWithPort(newPort: Int) {
@@ -78,6 +83,13 @@ fun MainScreen(modifier: Modifier = Modifier) {
     }
 
     LaunchedEffect(Unit) {
+        nwc.onFileReceived = { file ->
+            scope.launch(Dispatchers.Main) {
+                if (receivedFiles.none { it.name == file.name }) {
+                    receivedFiles.add(file)
+                }
+            }
+        }
         nwc.startServer(port = activePort)
         isServerRunning = true
     }
@@ -107,8 +119,6 @@ fun MainScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(4.dp))
-
             ServerStatusCard(
                 isRunning = isServerRunning,
                 port = activePort,
@@ -149,6 +159,8 @@ fun MainScreen(modifier: Modifier = Modifier) {
             ChooseFileCard(onFilesUpdated = { updatedList ->
                 nwc.filesList = updatedList
             })
+
+            SaveFileCard(receivedFiles = receivedFiles)
 
             Card {
                 Text(
