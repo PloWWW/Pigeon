@@ -6,9 +6,10 @@ An open-source local file sharing app for Android. Transfer files over local Wi-
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0+-7F52FF?style=flat-square&logo=kotlin&logoColor=white)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=flat-square&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
 [![Ktor](https://img.shields.io/badge/Engine-Ktor%20CIO-087CFA?style=flat-square&logo=ktor&logoColor=white)](https://ktor.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%99%A5-brightgreen?style=flat-square)](https://github.com/PloWWW/Pigeon)
 
-[Download APK](https://github.com/PloWWW/Pigeon/releases/latest) • [Features](#features) • [Installation](#installation) • [Building](#building)
+[Download APK](https://github.com/PloWWW/Pigeon/releases/latest) • [Features](#features) • [Installation](#installation) • [Building](#building) • [License](#license)
 
 ---
 
@@ -37,3 +38,32 @@ An open-source local file sharing app for Android. Transfer files over local Wi-
 git clone https://github.com/PloWWW/Pigeon.git
 cd Pigeon
 ./gradlew assembleDebug
+```
+
+---
+
+## License
+
+```text
+MIT License
+
+Copyright (c) 2026 Prism Studio contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
