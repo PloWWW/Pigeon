@@ -7,7 +7,7 @@ An open-source local file sharing app for Android. Transfer files over local Wi-
 [![Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=flat-square&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
 [![Ktor](https://img.shields.io/badge/Engine-Ktor%20CIO-087CFA?style=flat-square&logo=ktor&logoColor=white)](https://ktor.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%99%A5-brightgreen?style=flat-square)](https://github.com/PloWWW/Pigeon)
+[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%99%A5-brightgreen?style=flat-square)](https://github.com/Prism-Studio-dev/Pigeon)
 
 [Download APK](https://github.com/PloWWW/Pigeon/releases/latest) • [Features](#features) • [Installation](#installation) • [Building](#building) • [License](#license)
 
@@ -25,7 +25,7 @@ An open-source local file sharing app for Android. Transfer files over local Wi-
 
 ## Installation
 
-1. Grab the latest `.apk` from the [Releases](https://github.com/PloWWW/Pigeon/releases/latest) page.
+1. Grab the latest `.apk` from the [Releases](https://github.com/Prism-Studio-dev/Pigeon/releases/latest) page.
 2. Install it on your Android device.
 3. Connect both the phone and PC to the same Wi-Fi network.
 4. Launch the app and open the shown IP address (or scan the QR code) in the browser.
@@ -35,7 +35,7 @@ An open-source local file sharing app for Android. Transfer files over local Wi-
 ## Building
 
 ```bash
-git clone https://github.com/PloWWW/Pigeon.git
+git clone https://github.com/Prism-Studio-dev/Pigeon.git
 cd Pigeon
 ./gradlew assembleDebug
 ```
